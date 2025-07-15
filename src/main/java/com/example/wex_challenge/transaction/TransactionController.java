@@ -61,12 +61,12 @@ public class TransactionController {
         TransactionDto transaction = service.getTransactionById(id);
         LocalDate transactionLocalDateValidRange = transaction.getCreatedDate().minusMonths(6);
 
-        FilterDto mockedDto = new FilterDto(
+        FilterDto filters = new FilterDto(
                 country,
                 currency,
                 countryCurrency,
                 transactionLocalDateValidRange);
-        List<RatesDto> ratesList = ratesExchangeService.fetchRates(mockedDto);
+        List<RatesDto> ratesList = ratesExchangeService.fetchRates(filters);
         if (ratesList.isEmpty()) {
             throw new NoRateAvailableException();
         }
