@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.wex_challenge.ratesExchange.EvaluateExchangeRate;
-import com.example.wex_challenge.ratesExchange.FilterDto;
-import com.example.wex_challenge.ratesExchange.NoRateAvailableException;
-import com.example.wex_challenge.ratesExchange.RatesDto;
-import com.example.wex_challenge.ratesExchange.RatesExchangeService;
+import com.example.wex_challenge.rates_exchange.EvaluateExchangeRate;
+import com.example.wex_challenge.rates_exchange.FilterDto;
+import com.example.wex_challenge.rates_exchange.NoRateAvailableException;
+import com.example.wex_challenge.rates_exchange.RatesDto;
+import com.example.wex_challenge.rates_exchange.RatesExchangeService;
 
 import jakarta.validation.Valid;
 
@@ -34,7 +34,7 @@ public class TransactionController {
     }
 
     @PostMapping
-    public ResponseEntity<TransactionDto> createTransaction(@RequestBody @Valid TransactionDto dto) {
+    public ResponseEntity<TransactionDto> createTransaction(@Valid @RequestBody TransactionDto dto) {
         return ResponseEntity.ok().body(service.createTransaction(dto));
 
     }

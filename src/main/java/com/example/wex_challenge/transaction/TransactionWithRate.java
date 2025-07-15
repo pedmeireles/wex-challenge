@@ -2,16 +2,18 @@ package com.example.wex_challenge.transaction;
 
 import java.math.BigDecimal;
 
-import com.example.wex_challenge.ratesExchange.RatesDto;
+import com.example.wex_challenge.rates_exchange.RatesDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 public class TransactionWithRate extends TransactionDto {
     private RatesDto exchangeRateData;
 

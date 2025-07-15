@@ -1,4 +1,4 @@
-package com.example.wex_challenge.ratesExchange;
+package com.example.wex_challenge.rates_exchange;
  
 public class FilterWithoutTransactionDateException extends RuntimeException {
     public FilterWithoutTransactionDateException(){

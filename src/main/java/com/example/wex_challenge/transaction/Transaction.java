@@ -10,6 +10,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,6 +26,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "transaction")
 public class Transaction {
     
     @Id
@@ -32,9 +37,12 @@ public class Transaction {
     private String description;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
+    @PastOrPresent(message = "A transaction cannot happen on the future.")
     private LocalDate createdDate;
 
-    @Column(precision = 15, scale = 2)
+    @Column(precision = 15, scale = 2)    
+    @NotNull(message="amount is required")
+    @DecimalMin(value="0.01",  message = "amount must be at least 1 cent")
     private BigDecimal amount;
 
     

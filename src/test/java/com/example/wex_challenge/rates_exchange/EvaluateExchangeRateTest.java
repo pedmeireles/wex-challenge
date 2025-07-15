@@ -1,4 +1,4 @@
-package com.example.wex_challenge.ratesExchange;
+package com.example.wex_challenge.rates_exchange;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

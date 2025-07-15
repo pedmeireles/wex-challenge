@@ -9,9 +9,9 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import com.example.wex_challenge.ratesExchange.FilterWithoutCurrencyOrCountryException;
-import com.example.wex_challenge.ratesExchange.FilterWithoutTransactionDateException;
-import com.example.wex_challenge.ratesExchange.NoRateAvailableException;
+import com.example.wex_challenge.rates_exchange.FilterWithoutCurrencyOrCountryException;
+import com.example.wex_challenge.rates_exchange.FilterWithoutTransactionDateException;
+import com.example.wex_challenge.rates_exchange.NoRateAvailableException;
 import com.example.wex_challenge.transaction.TransactionNotFoundException;
 
 @ControllerAdvice
