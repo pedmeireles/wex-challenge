@@ -30,7 +30,7 @@ public class UrlGenerator {
         LocalDate transactionDate = filtersDto.getTransactionDate();
 
         if (transactionDate == null) {
-            throw new FilterWithoutTransactionDate();
+            throw new FilterWithoutTransactionDateException();
         }
 
         String effectiveDateFilter = "effective_date:gte:"
@@ -47,7 +47,7 @@ public class UrlGenerator {
         String currency = filtersDto.getCurrency();
 
         if (!isStringNonNullOrNonEmpty(currency) && !isStringNonNullOrNonEmpty(country)) {
-            throw new FilterWithoutCurrencyOrCountry();
+            throw new FilterWithoutCurrencyOrCountryException();
         }
         String countryFilter = isStringNonNullOrNonEmpty(country) ? "country:eq:" + country : "";
         String currencyFilter = isStringNonNullOrNonEmpty(currency) ? "currency:eq:" + currency : "";

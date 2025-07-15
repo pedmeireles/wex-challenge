@@ -28,7 +28,7 @@ public class UrlGeneratorTests {
     private final String SORT_QUERY_PARAMS = "sort=-effective_date";
 
     @Test
-    public void generateUrlWhenAllFieldsAreSetup() {
+    void generateUrlWhenAllFieldsAreSetup() {
 
         // precondition
         FilterDto filtersDto = new FilterDto(
@@ -47,7 +47,7 @@ public class UrlGeneratorTests {
     }
 
     @Test
-    public void generateUrlWhenOnlyCountryCurrencyIsNonProvidedWithNull() {
+    void generateUrlWhenOnlyCountryCurrencyIsNonProvidedWithNull() {
 
         // precondition
         FilterDto filtersDto = new FilterDto(
@@ -67,7 +67,7 @@ public class UrlGeneratorTests {
     }
 
     @Test
-    public void generateUrlWhenOnlyCountryCurrencyIsNonProvidedWithEmptyString() {
+    void generateUrlWhenOnlyCountryCurrencyIsNonProvidedWithEmptyString() {
 
         // precondition
         FilterDto filtersDto = new FilterDto(
@@ -87,7 +87,7 @@ public class UrlGeneratorTests {
     }
 
     @Test
-    public void generateUrlWhenOnlyCurrencyIsProvidedWithNullScenario() {
+    void generateUrlWhenOnlyCurrencyIsProvidedWithNullScenario() {
 
         // precondition
         FilterDto filtersDto = new FilterDto(
@@ -106,7 +106,7 @@ public class UrlGeneratorTests {
     }
 
     @Test
-    public void generateUrlWhenOnlyCurrencyIsProvidedWithEmptyStrignScenario() {
+    void generateUrlWhenOnlyCurrencyIsProvidedWithEmptyStrignScenario() {
 
         // precondition
         FilterDto filtersDto = new FilterDto(
@@ -125,7 +125,7 @@ public class UrlGeneratorTests {
     }
 
     @Test
-    public void generateUrlWhenOnlyCountryIsProvidedNullScenario() {
+    void generateUrlWhenOnlyCountryIsProvidedNullScenario() {
 
         // precondition
         FilterDto filtersDto = new FilterDto(
@@ -144,7 +144,7 @@ public class UrlGeneratorTests {
     }
 
     @Test
-    public void generateUrlWhenOnlyCountryIsProvidedEmptyStringScenario() {
+    void generateUrlWhenOnlyCountryIsProvidedEmptyStringScenario() {
 
         // precondition
         FilterDto filtersDto = new FilterDto(
@@ -163,14 +163,14 @@ public class UrlGeneratorTests {
     }
 
     @Test
-    public void throwAnErrorWhenOnlyTransactionDateIsProvidedEmptyStringScenarios() {
+    void throwAnErrorWhenOnlyTransactionDateIsProvidedEmptyStringScenarios() {
         FilterDto filtersDto = new FilterDto(
                 "",
                 "",
                 "",
                 TRANSACTION_DATE_EXAMPLE);
-        FilterWithoutCurrencyOrCountry expectedError = Assertions.assertThrows(
-                FilterWithoutCurrencyOrCountry.class,
+        FilterWithoutCurrencyOrCountryException expectedError = Assertions.assertThrows(
+                FilterWithoutCurrencyOrCountryException.class,
                 () -> urlGenerator.buildUrl(filtersDto));
 
         assertEquals(expectedError.getMessage(), "Filter does not have neither a country or a currency setup");
@@ -178,14 +178,14 @@ public class UrlGeneratorTests {
     }
 
     @Test
-    public void throwAnErrorWhenOnlyTransactionDateIsProvidedNullScenarios() {
+    void throwAnErrorWhenOnlyTransactionDateIsProvidedNullScenarios() {
         FilterDto filtersDto = new FilterDto(
                 null,
                 null,
                 null,
                 TRANSACTION_DATE_EXAMPLE);
-        FilterWithoutCurrencyOrCountry expectedError = Assertions.assertThrows(
-                FilterWithoutCurrencyOrCountry.class,
+        FilterWithoutCurrencyOrCountryException expectedError = Assertions.assertThrows(
+                FilterWithoutCurrencyOrCountryException.class,
                 () -> urlGenerator.buildUrl(filtersDto));
 
         assertEquals(expectedError.getMessage(), "Filter does not have neither a country or a currency setup");
@@ -193,14 +193,14 @@ public class UrlGeneratorTests {
     }
 
     @Test
-    public void throwAnErrorWhenTransactionDateIsNotProvidedNullScenario() {
+    void throwAnErrorWhenTransactionDateIsNotProvidedNullScenario() {
         FilterDto filtersDto = new FilterDto(
                 COUNTRY_EXAMPLE,
                 CURRENCY_EXAMPLE,
                 COUNTRY_CURRENCY_DESC_EXAMPLE,
                 null);
-        FilterWithoutTransactionDate expectedError = Assertions.assertThrows(
-                FilterWithoutTransactionDate.class,
+        FilterWithoutTransactionDateException expectedError = Assertions.assertThrows(
+                FilterWithoutTransactionDateException.class,
                 () -> urlGenerator.buildUrl(filtersDto));
 
         assertEquals(expectedError.getMessage(), "Filter does not have a transaction date setup");

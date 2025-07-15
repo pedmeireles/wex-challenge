@@ -1,5 +1,6 @@
 package com.example.wex_challenge.transaction;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -9,9 +10,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.wex_challenge.ratesExchange.EvaluateExchangeRate;
 import com.example.wex_challenge.ratesExchange.FilterDto;
+import com.example.wex_challenge.ratesExchange.NoRateAvailableException;
 import com.example.wex_challenge.ratesExchange.RatesDto;
 import com.example.wex_challenge.ratesExchange.RatesExchangeService;
 
@@ -45,16 +49,34 @@ public class TransactionController {
         return ResponseEntity.ok().body(service.getTransactionById(id));
     }
 
-    @GetMapping("/test")
-    public ResponseEntity<List<RatesDto>> testFetchingFromFiscalData() {
-        FilterDto mockedDto = new FilterDto(
-            "Australia",
-            "Dollar",
-            "Australia-Dollar",
-            LocalDate.of(2026, 1, 1)
-        );
+    @GetMapping("/{id}/exchange-rate")
+    public ResponseEntity<TransactionWithRate> testFetchingFromFiscalData(
+            @PathVariable("id") Long id,
+            @RequestParam(required = false, defaultValue = "", name = "country") String country,
+            @RequestParam(required = false, defaultValue = "", name = "currency") String currency,
+            @RequestParam(required = false, defaultValue = "", name = "countryCurrency") String countryCurrency
 
-        return ResponseEntity.ok().body(ratesExchangeService.fetchRates(mockedDto));
+    ) {
+
+        TransactionDto transaction = service.getTransactionById(id);
+        LocalDate transactionLocalDateValidRange = transaction.getCreatedDate().minusMonths(6);
+
+        FilterDto mockedDto = new FilterDto(
+                country,
+                currency,
+                countryCurrency,
+                transactionLocalDateValidRange);
+        List<RatesDto> ratesList = ratesExchangeService.fetchRates(mockedDto);
+        if (ratesList.isEmpty()) {
+            throw new NoRateAvailableException();
+        }
+        RatesDto firstRate = ratesList.get(0);
+
+        BigDecimal convertedExchangeRate = EvaluateExchangeRate.evaluateExchangeRate(firstRate, transaction);
+
+        TransactionWithRate response = new TransactionWithRate(transaction, firstRate, convertedExchangeRate);
+
+        return ResponseEntity.ok().body(response);
 
     }
 

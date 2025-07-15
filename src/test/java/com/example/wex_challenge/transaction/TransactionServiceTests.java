@@ -17,7 +17,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class TransactionServiceTests {
+class TransactionServiceTests {
 
     @Mock
     private TransactionRepository repository;
@@ -28,7 +28,7 @@ public class TransactionServiceTests {
     private TransactionDto transactionDto;
 
     @BeforeEach
-    public void setup(){
+    void setup(){
         transactionDto = TransactionDto.builder()
         .amount(new BigDecimal("1.00"))
         .description("A description")
@@ -37,7 +37,7 @@ public class TransactionServiceTests {
     }
 
     @Test
-    public void saveTransactionTest(){
+    void saveTransactionTest(){
         
         
         //precondition
@@ -62,7 +62,7 @@ public class TransactionServiceTests {
     
     
     @Test
-    public void saveTransactionWithoutCreatedDateTest(){
+    void saveTransactionWithoutCreatedDateTest(){
         
         
         //precondition
@@ -76,7 +76,7 @@ public class TransactionServiceTests {
 
         Transaction transactionWithId = new Transaction(1l, transaction.getDescription(),transaction.getCreatedDate(),transaction.getAmount());
 
-        TransactionDto transactionDtoWithoutDate = transactionDto.builder()
+        TransactionDto transactionDtoWithoutDate = TransactionDto.builder()
         .amount(transactionDto.getAmount())
         .description(transactionDto.getDescription())
         .build()        ;
@@ -94,7 +94,7 @@ public class TransactionServiceTests {
     
     
     @Test
-    public void getAllTransactionsWithSingleItem(){
+    void getAllTransactionsWithSingleItem(){
         
         
         //precondition
@@ -120,7 +120,7 @@ public class TransactionServiceTests {
     }
     
     @Test
-    public void getAllTransactionsWithMultipleItems(){
+    void getAllTransactionsWithMultipleItems(){
         
         
         //precondition
@@ -142,7 +142,7 @@ public class TransactionServiceTests {
     }
     
     @Test
-    public void getAllTransactionsWithNoItems(){
+    void getAllTransactionsWithNoItems(){
         
         
         //precondition
@@ -152,11 +152,11 @@ public class TransactionServiceTests {
         List<TransactionDto> savedTransaction = service.getAllTransactions();
 
         assertThat(savedTransaction).isNotNull();
-        assertThat(savedTransaction).hasSize(0);
+        assertThat(savedTransaction).isEmpty();
     }
 
     @Test
-    public void getATransactionByIdSuccess(){
+    void getATransactionByIdSuccess(){
 
         //Precondition
 
