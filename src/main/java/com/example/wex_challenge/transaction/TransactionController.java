@@ -30,15 +30,11 @@ public class TransactionController {
         
     }
     @GetMapping
-    public ResponseEntity<List<Transaction>> getAllTransactions() {
-        return ResponseEntity.ok().body(service.getAllTransactions());
+    public ResponseEntity<List<TransactionDto>> getAllTransactions() {
+        return ResponseEntity.ok(service.getAllTransactions());
     }
-    // @GetMapping
-    // public ResponseEntity<List<TransactionDto>> getAllTransactions() {
-    //     return ResponseEntity.ok(service.getAllTransactions());
-    // }
     @GetMapping("/{id}")
-    public ResponseEntity<TransactionDto> getTransactionById(@PathVariable Long id) {
+    public ResponseEntity<TransactionDto> getTransactionById(@PathVariable("id") Long id) {
         return ResponseEntity.ok().body(service.getTransactionById(id));
     }
     

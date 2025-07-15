@@ -35,6 +35,7 @@ public class TransactionService {
         .amount(saved.getAmount())
         .build();
     }
+    
     public TransactionDto getTransactionById(Long id){
         Transaction transaction = repository.findById(id)
         .orElseThrow(() -> new TransactionNotFoundException(id));
@@ -46,12 +47,7 @@ public class TransactionService {
             transaction.getAmount()
         );
     }
-    public List<Transaction> getAllTransactions(){
-        System.out.println("entered on transaction service::getAllTransactions");
-        return repository.findAll();
-    }
-    public List<TransactionDto> getAllTransactionsDto(){
-        System.out.println("entered on transaction service::getAllTransactions");
+    public List<TransactionDto> getAllTransactions(){
         return repository.findAll().stream().map(transaction -> new TransactionDto(
              transaction.getId(),
             transaction.getDescription(),
